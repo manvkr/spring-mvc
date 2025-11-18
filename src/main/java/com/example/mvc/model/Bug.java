@@ -30,6 +30,18 @@ public class Bug {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
+    public Bug() {
+        super();
+    }
+
+    public Bug(Long id, String bugTitle, String description, Status status, Severity severity) {
+        this.id = id;
+        this.bugTitle = bugTitle;
+        this.description = description;
+        this.status = status;
+        this.severity = severity;
+    }
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();

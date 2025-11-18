@@ -32,7 +32,8 @@ public class BugController {
         if (severity != null) {
             return bugService.getBugsBySeverity(severity);
         }
-        return bugService.getAllBugs();
+        List<Bug> l =  bugService.getAllBugs();
+        return l;
     }
 
     @PostMapping(value = "/bugs", produces = MediaType.APPLICATION_JSON_VALUE)

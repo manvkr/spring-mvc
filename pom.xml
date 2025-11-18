@@ -28,6 +28,7 @@
       <artifactId>spring-orm</artifactId>
       <version>${spring.version}</version>
     </dependency>
+
     <!-- JPA / Hibernate -->
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -44,12 +45,14 @@
       <artifactId>jakarta.persistence-api</artifactId>
       <version>2.2.3</version>
     </dependency>
+
     <!-- MySQL Driver -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.33</version>
     </dependency>
+
     <!-- Jackson for JSON -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -61,6 +64,7 @@
       <artifactId>jackson-datatype-jsr310</artifactId>
       <version>2.17.1</version>
     </dependency>
+
     <!-- Servlet API (provided by Tomcat) -->
     <dependency>
       <groupId>jakarta.servlet</groupId>
@@ -68,12 +72,14 @@
       <version>4.0.4</version>
       <scope>provided</scope>
     </dependency>
+
     <!-- JSTL -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
+
     <!-- Testing -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -85,6 +91,44 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>5.10.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>5.7.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Mockito for mocking -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest</artifactId>
+      <version>2.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Spring Test for MockMvc -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>5.3.29</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JSON path for verifying JSON responses in MockMvc -->
+    <dependency>
+      <groupId>com.jayway.jsonpath</groupId>
+      <artifactId>json-path</artifactId>
+      <version>2.9.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
