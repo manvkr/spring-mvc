@@ -8,6 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -22,6 +23,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = {"com.example.mvc.repository"})
 @PropertySource(value = {
         "classpath:jdbc.properties",
         "classpath:jdbc-docker.properties"
@@ -32,7 +34,7 @@ import java.util.Properties;
         "com.example.mvc.model",
         "com.example.mvc.config"
 })
-public class PersistenceConfig {
+public class JPAConfig {
 
     @Value("${jdbc.url}")
     private String jdbcUrl;
@@ -68,7 +70,7 @@ public class PersistenceConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             DataSource dataSource,
             JpaVendorAdapter jpaVendorAdapter,
             Environment environment) {
@@ -77,7 +79,7 @@ public class PersistenceConfig {
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         entityManagerFactoryBean.setPackagesToScan("com.example.mvc.model");
-
+        entityManagerFactoryBean.setPersistenceUnitName("bugtrackerPU");
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.hbm2ddl.auto", "update");
         jpaProperties.put("hibernate.show_sql", "true");

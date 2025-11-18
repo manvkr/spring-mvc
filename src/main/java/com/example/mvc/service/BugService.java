@@ -3,12 +3,36 @@ package com.example.mvc.service;
 import com.example.mvc.model.Severity;
 import com.example.mvc.model.Status;
 import com.example.mvc.model.Bug;
+import com.example.mvc.repository.BugRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface BugService {
-    List<Bug> getAllBugs();
-    List<Bug> getBugsBySeverity(Severity severity);
-    //List<Bug> getBugsByStatus(Status status);
-    Bug createBug(String bugTitle, String description, Status status, Severity severity);
+@Service
+public class BugService {
+
+    @Autowired
+    private BugRepository bugRepository;
+
+    @Transactional(readOnly = true)
+    public List<Bug> getAllBugs() {
+        return bugRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Bug> getBugsBySeverity(Severity severity) {
+        return bugRepository.findBySeverity(severity);
+    }
+
+    @Transactional
+    public Bug createBug(String bugTitle, String description, Status status, Severity severity) {
+        Bug bug = new Bug();
+        bug.setBugTitle(bugTitle);
+        bug.setDescription(description);
+        bug.setStatus(status);
+        bug.setSeverity(severity);
+        return bugRepository.save(bug);
+    }
 }
