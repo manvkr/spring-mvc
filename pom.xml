@@ -156,6 +156,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.4.0</version>
         <configuration>
+          <warName>bug-tracker</warName>
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
