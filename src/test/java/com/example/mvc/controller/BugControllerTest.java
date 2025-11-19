@@ -40,13 +40,6 @@ public class BugControllerTest {
     }
 
     @Test
-    void testIndex_returnsIndexView() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("index"));
-    }
-
-    @Test
     void testListBugs_returnsAllBugs_whenSeverityIsNull() throws Exception {
         List<Bug> mockBugs = Arrays.asList(
                 new Bug(1L, "Bug1", "Description1", Status.OPEN, Severity.HIGH),
@@ -55,7 +48,7 @@ public class BugControllerTest {
 
         when(bugService.getAllBugs()).thenReturn(mockBugs);
 
-        mockMvc.perform(get("/bugs").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/bug/list").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(mockBugs.size()))
@@ -74,7 +67,7 @@ public class BugControllerTest {
 
         when(bugService.getBugsBySeverity(Severity.HIGH)).thenReturn(mockBugs);
 
-        mockMvc.perform(get("/bugs")
+        mockMvc.perform(get("/bug/list")
                         .param("severity", "HIGH")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -91,7 +84,7 @@ public class BugControllerTest {
         Bug newBug = new Bug(1L, "Bug1", "Desc", Status.OPEN, Severity.MEDIUM);
         when(bugService.createBug("Bug1", "Desc", Status.OPEN, Severity.MEDIUM)).thenReturn(newBug);
 
-        mockMvc.perform(post("/bugs")
+        mockMvc.perform(post("/bug/add")
                         .param("bugTitle", "Bug1")
                         .param("description", "Desc")
                         .param("status", "OPEN")

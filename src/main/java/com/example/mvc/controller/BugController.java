@@ -9,10 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/bug")
 public class BugController {
 
     private final BugService bugService;
@@ -21,23 +23,20 @@ public class BugController {
         this.bugService = bugService;
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "index"; // JSP view name
+    @GetMapping("/dashboard")
+    public ModelAndView showBugListPage() {
+        return new ModelAndView("bugDashboard");
     }
 
-    @GetMapping(value = "/bugs", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Bug> listBugs(@RequestParam(value = "severity", required = false) Severity severity) {
         if (severity != null) {
             return bugService.getBugsBySeverity(severity);
         }
-        List<Bug> l =  bugService.getAllBugs();
-        return l;
+        return bugService.getAllBugs();
     }
 
-    @PostMapping(value = "/bugs", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public Bug createBug(@RequestParam("bugTitle") String bugTitle,
                          @RequestParam("description") String description,
                          @RequestParam("status") Status status,

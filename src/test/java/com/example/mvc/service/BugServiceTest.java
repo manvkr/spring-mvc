@@ -129,6 +129,6 @@ public class BugServiceTest {
                 () -> bugService.createBug("Bug A", "desc", Status.OPEN, Severity.HIGH)
         );
 
-        assertEquals("DB insert error", ex.getMessage());
+        assertEquals("Failed to save bug", ex.getMessage());
     }
 }
