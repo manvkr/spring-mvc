@@ -37,7 +37,7 @@ USE bugtracker;
 ```bash
 mvn clean package
 ```
-Generates `target/spring-mvc-bug-tracking-app.war`.
+Generates `target/bug-tracker.war`.
 
 ## Deploy to Tomcat 9
 1. Copy `target/bug-tracker.war` to `TOMCAT_HOME/webapps/`.
@@ -139,3 +139,4 @@ environment:
 The JSP injects `API_BASE` into JavaScript; all AJAX calls use it
 
 Enjoy! :)
+
