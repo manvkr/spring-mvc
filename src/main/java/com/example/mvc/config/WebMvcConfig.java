@@ -1,14 +1,16 @@
 package com.example.mvc.config;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -21,7 +23,30 @@ import java.util.List;
 @ComponentScan(basePackages = {
         "com.example.mvc.controller"
 })
+@PropertySource(value = {
+        "classpath:application.properties"
+}, ignoreResourceNotFound = true)
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Value("${app.allowed.origin:*}")
+    private String allowedOrigin;
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry){
+        registry.addMapping("/**")
+                .allowedOrigins(resolveAllowedOrigin())
+                .allowedMethods("GET","POST","OPTIONS")
+                .allowCredentials(false)
+                .maxAge(3600);
+    }
+
+    private String resolveAllowedOrigin(){
+        String env = System.getenv("APP_ALLOWED_ORIGIN");
+        if(env != null && !env.isBlank()) return env;
+        String sys = System.getProperty("APP_ALLOWED_ORIGIN");
+        if(sys != null && !sys.isBlank()) return sys;
+        return allowedOrigin;
+    }
 
     @Bean
     public ViewResolver jspViewResolver() {

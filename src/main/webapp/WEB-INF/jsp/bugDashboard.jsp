@@ -1,4 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+     String base = System.getenv("APP_API_BASE_URL");
+     if(base == null) base = System.getProperty("APP_API_BASE_URL");
+     if(base == null || base.trim().isEmpty()){
+        String schema = request.getScheme();
+        String host = request.getServerName();
+        int port = request.getServerPort();
+        boolean standard = ("http".equalsIgnoreCase(schema) && port == 80)
+                            ||  ("https".equalsIgnoreCase(schema) && port == 443);
+        String ctx = request.getContextPath();
+        base = schema + "://" + host + (standard ? "" : ":" + port) + ctx;
+     }
+     base = base.replaceAll("/+$","");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,8 +73,14 @@
 </table>
 
 <script>
+
+    window.API_BASE = "<%= base %>";
+    function apiUrl(path){
+        return window.API_BASE + "/bug" +path;
+    }
+
     function loadBug(filterSeverity) {
-        let url = 'list';
+        let url = apiUrl("/list");
         if (filterSeverity && filterSeverity !== 'ALL') {
             // we can either filter client-side or request server-side
             url += '?severity=' + filterSeverity;
@@ -95,7 +115,7 @@
             const form = $(this);
             const formData = form.serialize();
             $.ajax({
-                url: 'add',
+                url: apiUrl("/add"),
                 method: 'POST',
                 data: formData,
                 success: function(newBug, textStatus, xhr) {

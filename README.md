@@ -72,10 +72,14 @@ This project includes a multi-stage Docker build and a `docker-compose.yml` to r
 ### Build & Run (PowerShell)
 ```powershell
 # Build and start containers
+docker-compose build
+docker-compose up -d
+ OR
 docker compose up -d --build
 
 # View logs
-docker compose logs -f app
+docker logs -f bugtracker-app
+docker logs -f bugtracker-mysql
 
 # Stop
 docker compose down
@@ -116,5 +120,22 @@ docker compose up -d
 - Ensure the `mysql` service is healthy before the app attempts first queries (compose manages order but initial delays can happen).
 - Date/time JSON issues: confirm the image was rebuilt AFTER adding `jackson-datatype-jsr310`.
 - To inspect running container: `docker exec -it springapp-web /bin/bash`.
+
+### Running Client and Server Separately
+Set `APP_API_BASE_URL` to the server's base path, e.g.
+
+PowerShell (local) or Standalone Tomcat
+Set the Environment Variable
+```powershell
+$env:APP_ALLOWED_ORIGIN="http://10.9.8.7:8081";
+$env:APP_API_BASE_URL="http://10.1.2.3:8080/bug-tracker"
+```
+Docker compose:
+```yaml
+environment:
+  APP_ALLOWED_ORIGIN: "http://client.example.com"
+  APP_API_BASE_URL: "http://spring-web:8080"
+```
+The JSP injects `API_BASE` into JavaScript; all AJAX calls use it
 
 Enjoy! :)
