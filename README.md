@@ -30,7 +30,10 @@ USE bugtracker;
 -- );
 ```
 
-## Build
+## Prerequisite before creating build and deploying application to tomcat (without Docker)
+1. Comment out the `jdbc-docker.properties` in case you want to run application on standalone Tomcat
+2. Update the DB details in `jdbc.properties`
+3. Build the application
 ```bash
 mvn clean package
 ```
