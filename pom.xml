@@ -4,7 +4,7 @@
   <artifactId>spring-mvc-bug-tracking-app</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>Spring MVC User App</name>
+  <name>Spring MVC Bug Management App</name>
   <properties>
     <java.version>17</java.version>
     <spring.version>5.3.30</spring.version>
