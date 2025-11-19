@@ -26,6 +26,8 @@ services:
       JDBC_URL: jdbc:mysql://mysql:3306/bugtracker?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       JDBC_USERNAME: buguser
       JDBC_PASSWORD: bugpwd
+      APP_ALLOWED_ORIGIN: "http://ui-vm:8081"
+      APP_API_BASE_URL: "http://localhost:8080"
     ports:
       - "8080:8080"
     # Optionally mount a custom jdbc-docker.properties if you change credentials

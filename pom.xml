@@ -122,14 +122,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Spring Test for MockMvc -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <version>5.3.29</version>
-      <scope>test</scope>
-    </dependency>
-
     <!-- JSON path for verifying JSON responses in MockMvc -->
     <dependency>
       <groupId>com.jayway.jsonpath</groupId>
