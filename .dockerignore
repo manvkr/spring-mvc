@@ -1,0 +1,16 @@
+# Maven build artifacts
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE / OS files
+*.iml
+.classpath
+.project
+.settings/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
